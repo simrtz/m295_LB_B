@@ -1,6 +1,12 @@
 # m295_LB_B
 Repository for LB part B of Module 295 
 
+## Project
+M295_LB_N
+
+## Author
+Simon Rutz
+
 ## Set-Up
 
 1. Visual Studio Code with Dev Containers extension required

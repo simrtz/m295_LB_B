@@ -1,0 +1,343 @@
+openapi: 3.0.3
+info:
+  title: API for LB Part B of module 295
+  description: |
+    Service for managing task functionality
+  contact:
+    name: Simon Rutz
+    email: simon.rutz@protonmail.com
+  version: 1.0.0
+
+tags:
+  - name: auth
+  - name: tasks
+
+paths:
+  '/login':
+    post:
+      tags: 
+        - auth
+      summary: Log in user
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  email: 
+                    type: string
+                    example: "test@test.com"
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error: 
+                    type: string
+                    example: "Invalid credentials"
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/dataRetrievalError'
+                
+
+  '/verify':
+    get:
+      tags: 
+        - auth
+      summary: Verify if user is logged in
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  email: 
+                    type: string
+                    example: "test@test.com"
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error: 
+                    type: string
+                    example: "Not logged in"
+
+  '/logout':
+    delete: 
+      tags:
+        - auth
+      summary: Log out user
+      responses:
+        '204':
+          description: No Content
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error: 
+                    type: string
+                    example: "Not logged in"
+
+  '/tasks':
+    get:
+      tags:
+        - tasks
+      summary: Read all tasks
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/task'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error: 
+                    type: string
+                    example: "no tasks found"
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/dataRetrievalError'
+                
+    post: 
+      tags:
+        - tasks
+      summary: Create a new task 
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/task'
+      responses:  
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/task' 
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/bookAlreadyExists'
+        '422':
+          description: Unprocessable Content
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/invalidBookJson'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                oneOf:
+                  - $ref: '#/components/schemas/dataRetrievalError'
+                  - $ref: '#/components/schemas/dataWritingError'
+
+  '/tasks/{id}':
+    get:
+      tags:
+        - tasks
+      summary: Read a single task by its id
+      parameters:
+        - $ref: '#/components/parameters/id'
+      responses:
+        '200':
+          description: OK
+          content: 
+            application/json:
+              schema:
+                $ref: '#/components/schemas/task'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/bookNotFoundByIsbn'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/dataRetrievalError'
+
+    put:
+      tags: 
+        - tasks
+      summary: Update a task by its id
+      parameters: 
+        - $ref: '#/components/parameters/id'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/task'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/task'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/bookAlreadyExists'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/bookNotFoundByIsbn'
+        '422':
+          description: Unprocessable Content
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/invalidBookJson'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                oneOf:
+                  - $ref: '#/components/schemas/dataRetrievalError'
+                  - $ref: '#/components/schemas/dataWritingError'
+
+    delete:
+      tags: 
+        - tasks
+      summary: Delete a task by its id
+      parameters:
+        - $ref: '#/components/parameters/id'
+      responses:
+        '204':
+          description: No Content
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/bookNotFoundByIsbn'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                oneOf:
+                  - $ref: '#/components/schemas/dataRetrievalError'
+                  - $ref: '#/components/schemas/dataWritingError'
+          
+components:
+  parameters:
+    id:
+      name: id
+      in: path
+      required: true
+      description: The id of a task
+      schema:
+        type: integer
+        
+  schemas:
+    task:
+      description: A task
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          example: 123
+        author:
+          type: string
+          format: string
+          example: "user@usermail.com" 
+        title:
+          type: string
+          example: "Clean the kitchen"
+        borrowed_at:
+          type: string
+          format: date-time
+          example: "2023-06-01T13:16:58.261Z"
+        returned_at:
+          type: string
+          format: date-time
+          example: "2023-06-02T09:16:58.261Z"
+          
+    dataRetrievalError:
+      type: object
+      properties:
+        error:
+          type: string
+          example: "An Error occured while retrieving data. Err: ${err}"
+            
+    dataWritingError:
+      type: object
+      properties:
+        error:
+          type: string
+          example: "An Error occured while writing data. Err: ${err}"
+          
+    invalidBookJson:
+      type: object
+      properties:
+        error: 
+          type: string
+          example: "Json is invalid. Required properties are: 'id': String, 'title': String, 'year': Number, 'author': String"
+    
+    bookNotFoundByIsbn:
+      type: object
+      properties:
+        error:
+          type: string
+          example: "no task with id: '${id}' found"
+          
+    bookAlreadyExists:
+      type: object
+      properties:
+        error:
+          type: string
+          example: "task with id: '${newBook.id}' already exists"
+
+    lendNotFoundById:
+      type: object
+      properties:
+        error:
+          type: string
+          example: "no lend with id: ${id} found "
+        
+    invalidLendJson:
+      type: object
+      properties:
+        error: 
+          type: string
+          example: "Json is invalid. Required properties are: 'customer_id': Number, 'id': String"
+  

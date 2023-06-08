@@ -1,0 +1,74 @@
+[
+    {
+        "id": 1,
+        "title": "Clean the kitchen",
+        "author": "user@usermail.com",
+        "created_at": "2023-06-08 10:00:24",
+        "completed_at": "2023-06-09 10:49:24"
+    },
+    {
+        "id": 2,
+        "title": "Do laundry",
+        "user_id": "user@usermail.com",
+        "created_at": "2023-06-08 11:30:24",
+        "completed_at": ""
+    },
+    {
+        "id": 3,
+        "title": "Pay bills",
+        "user_id": "goofy@mcgoofball.com",
+        "created_at": "2023-06-08 13:00:24",
+        "completed_at": ""
+    },
+    {
+        
+        "id": 4,
+        "title": "Buy groceries",
+        "user_id": "goofy@mcgoofball.com",
+        "created_at": "2023-06-08 15:30:24",
+        "completed_at": ""
+    },
+    {
+        
+        "id": 5,
+        "title": "Schedule dentist appointment",
+        "user_id": "user@usermail.com",
+        "created_at": "2023-06-09 09:00:24",
+        "completed_at": ""
+    },
+    {
+        "id": 6,
+        "title": "Walk the dog",
+        "user_id": "amogus@amogus.com",
+        "created_at": "2023-06-09 14:30:24",
+        "completed_at": ""
+    },
+    {
+        "id": 7,
+        "title": "Read a book",
+        "user_id": "aughhhhh@aughhhhh.com",
+        "created_at": "2023-06-10 11:00:24",
+        "completed_at": ""
+    },
+    {
+        "id": 8,
+        "title": "Write a blog post",
+        "user_id": "aughhhhh@aughhhhh.com",
+        "created_at": "2023-06-11 16:00:24",
+        "completed_at": ""
+    },
+    {
+        "id": 9,
+        "title": "Attend a yoga class",
+        "user_id": "goofy@mcgoofball.com",
+        "created_at": "2023-06-12 10:30:24",
+        "completed_at": ""
+    },
+    {
+        "id": 10,
+        "title": "Call parents",
+        "user_id": "user@usermail.com",
+        "created_at": "",
+        "completed_at": ""
+    }
+]
