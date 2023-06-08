@@ -254,7 +254,7 @@
                 },
                 "body": {
                   "contentType": "application/json",
-                  "body": "{\r\n    \"email\": \"user@usermail.com\",\r\n    \"password\": \"m295\"\r\n}"
+                  "body": "{\n    \"email\": \"user@usermail.com\",\n    \"password\": \"m295\"\n}"
                 },
                 "preRequestScript": "",
                 "testScript": "pw.test(\"Check Response status\", () => {\n  pw.expect(pw.response.status).toBe(200);\n});\n\npw.test('Check JSON', () => {\n  const json = pw.response.body;\n  pw.expect(json.email).toBe('user@usermail.com');\n});\n",

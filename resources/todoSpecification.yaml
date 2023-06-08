@@ -18,6 +18,21 @@ paths:
       tags: 
         - auth
       summary: Log in user
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email: 
+                  type: string
+                  example: "user@usermail.com" 
+                password:
+                  type: string
+                  example: "m295"
+              required:
+                - email
+                - password
       responses:
         '200':
           description: OK
@@ -131,7 +146,13 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/task'
+              type: object
+              properties:
+                title: 
+                  type: string
+                  example: "Clean the kitchen" 
+              required:
+                - title
       responses:  
         '201':
           description: Created
@@ -207,7 +228,23 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/task'
+              type: object
+              properties:
+                title: 
+                  type: string
+                  example: "Clean the kitchen"  
+                created_at: 
+                  type: string
+                  format: date-time
+                  example: "2023-06-08T13:58:34.469Z"  
+                completed_at: 
+                  type: string
+                  format: date-time
+                  example: "2023-06-08T23:59:59.469Z"  
+              required:
+                - title
+                - created_at
+                - completed_at
       responses:
         '200':
           description: OK
@@ -297,7 +334,6 @@ components:
           example: 123
         author:
           type: string
-          format: string
           example: "user@usermail.com" 
         title:
           type: string

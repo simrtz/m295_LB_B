@@ -15,5 +15,5 @@ Simon Rutz
 4. Run "`node todo.js`" to start application
 
 ## Testing
-The Hoppscotch-Collection "`todoAPI_m295_LBB_testingCollection.json`" used for testing the API is located under "`resources/testing`"
+"`todoAPI_m295_LBB_testingCollection.json`" Is the Hoppscotch-Collection used for testing the API
 
