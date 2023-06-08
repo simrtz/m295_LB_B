@@ -1,10 +1,15 @@
+/* eslint-disable camelcase */
+// Json properties created_at and completed_at wouldn't be mapped correctly,
+// if camelCase was used
+//
+
 const express = require('express');
 const fs = require('fs');
 
 const router = express.Router();
 router.use(express.json());
 
-const taskData = './resources/tasks.json';
+const taskData = '../resources/tasks.json';
 
 router.get('/', async (req, res) => {
   if (req.session.authenticated) {
@@ -28,10 +33,10 @@ router.get('/:id', async (req, res) => {
     const tasks = JSON.parse(await fs.promises.readFile(taskData)
       .catch((err) => res.status(500).json({ error: `An Error occured while retrieving data. Err: ${err}` })));
 
-    const task = tasks.find((wantedTask) => wantedTask.id === id);
+    const task = tasks.find((wantedTask) => wantedTask.id === parseInt(id, 10));
 
     if (!task) {
-      res.status(404).json({ error: `no task with id: '${id}' found` });
+      res.status(404).json({ error: `No task with id: '${id}' found` });
     }
 
     res.status(200).json(task);
@@ -42,19 +47,22 @@ router.get('/:id', async (req, res) => {
 
 router.post('/', async (req, res) => {
   if (req.session.authenticated) {
-    const newTask = req.body;
+    const { title } = req.body;
     const tasks = JSON.parse(await fs.promises.readFile(taskData)
       .catch((err) => res.status(500).json({ error: `An Error occured while retrieving data. Err: ${err}` })));
 
-    if ((!newTask.id && typeof newTask.id === 'string')
-          || (!newTask.title && typeof newTask.title === 'string')
-          || (!newTask.year && typeof newTask.title === 'number')
-          || (!newTask.author && typeof newTask.id === 'string')
+    if ((typeof title !== 'string')
     ) {
-      res.status(422).json({ error: "Json is invalid. Required properties are: 'id': Number, 'title': String, 'Author': String, 'author': String" });
-    } else if (tasks.find((task) => task.id === newTask.id)) {
-      res.status(400).json({ error: `task with id: '${newTask.id}' already exists` });
+      res.status(422).json({ error: "Json is invalid. Allowed properties are: 'title': String" });
     } else {
+      const newTask = {
+        title,
+        id: !tasks ? 1 : tasks[tasks.length - 1].id + 1,
+        author: req.session.email,
+        created_at: new Date(),
+        completed_at: '',
+      };
+
       tasks.push(newTask);
       await fs.promises.writeFile(taskData, JSON.stringify(tasks, null, 2))
         .catch((err) => res.status(500).json({ error: `An Error occured while writing data. Err: ${err}` }));
@@ -68,31 +76,36 @@ router.post('/', async (req, res) => {
 
 router.put('/:id', async (req, res) => {
   if (req.session.authenticated) {
-    const updatedBook = req.body;
+    const { title, created_at, completed_at } = req.body;
     const { id } = req.params;
 
     const tasks = JSON.parse(await fs.promises.readFile(taskData)
       .catch((err) => res.status(500).json({ error: `An Error occured while retrieving data. Err: ${err}` })));
 
-    if ((!updatedBook.id && typeof updatedBook.id === 'string')
-          || (!updatedBook.title && typeof updatedBook.title === 'string')
-          || (!updatedBook.year && typeof updatedBook.title === 'number')
-          || (!updatedBook.author && typeof updatedBook.id === 'string')
+    if (typeof title !== 'string'
+        || typeof created_at !== 'string'
+        || typeof completed_at !== 'string'
     ) {
-      res.status(422).json({ error: "Json is invalid. Required properties are: 'id': String, 'title': String, 'year': Number, 'author': String" });
-    } else if (!tasks.find((task) => task.id === updatedBook.id)) {
-      res.status(400).json({ error: `task with id: '${updatedBook.id}' already exists` });
+      res.status(422).json({ error: "Json is invalid. Required properties are: 'title': String, 'created_at': String, 'completed_at': String" });
     } else {
-      const task = tasks.find((wantedTask) => wantedTask.id === id);
+      const task = tasks.find((wantedTask) => wantedTask.id === parseInt(id, 10));
 
       if (!task) {
         res.status(404).json({ error: `no task with id: '${id}' found` });
       } else {
-        tasks[tasks.indexOf(task)] = updatedBook;
+        const updatedTask = {
+          id: parseInt(id, 10),
+          title,
+          author: req.session.email,
+          created_at,
+          completed_at,
+        };
+
+        tasks[tasks.indexOf(task)] = updatedTask;
         await fs.promises.writeFile(taskData, JSON.stringify(tasks, null, 2))
           .catch((err) => res.status(500).json({ error: `An Error occured while writing data. Err: ${err}` }));
 
-        res.status(200).json(updatedBook);
+        res.status(200).json(updatedTask);
       }
     }
   } else {
@@ -105,16 +118,16 @@ router.delete('/:id', async (req, res) => {
     const { id } = req.params;
     const tasks = JSON.parse(await fs.promises.readFile(taskData)
       .catch((err) => res.status(500).json({ error: `An Error occured while retrieving data. Err: ${err}` })));
-    const task = tasks.find((wantedTask) => wantedTask.id === id);
+    const task = tasks.find((wantedTask) => wantedTask.id === parseInt(id, 10));
 
     if (!task) {
-      res.status(404).json({ error: `no task with id: '${id}' found` });
+      res.status(404).json({ error: `No task with id: '${id}' found` });
     } else {
-      tasks.splice(tasks.indexOf(task));
+      tasks.splice(tasks.indexOf(task), 1);
       await fs.promises.writeFile(taskData, JSON.stringify(tasks, null, 2))
         .catch((err) => res.status(500).json({ error: `An Error occured while writing data. Err: ${err}` }));
 
-      res.sendStatus(204);
+      res.status(200).json(task);
     }
   } else {
     res.status(403).json({ error: 'Unauthorized to access this Endpoint' });

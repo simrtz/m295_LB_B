@@ -19,7 +19,7 @@ app.use((req, res, next) => {
   next();
 });
 
-const file = fs.readFileSync('./resources/todoSpecification.yaml', 'utf8');
+const file = fs.readFileSync('../resources/todoSpecification.yaml', 'utf8');
 const swaggerDocument = YAML.parse(file);
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
