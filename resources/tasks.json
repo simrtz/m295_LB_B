@@ -56,13 +56,6 @@
     "completed_at": ""
   },
   {
-    "id": 9,
-    "title": "Attend a yoga class",
-    "author": "goofy@mcgoofball.com",
-    "created_at": "2023-06-12T10:30:24.000Z",
-    "completed_at": ""
-  },
-  {
     "id": 10,
     "title": "Call parents tonight",
     "author": "user@usermail.com",
@@ -71,59 +64,16 @@
   },
   {
     "title": "Help clean the basement",
-    "goofball": "goofy",
+    "id": 11,
+    "author": "user@usermail.com",
+    "created_at": "2023-06-08T09:39:01.630Z",
+    "completed_at": ""
+  },
+  {
+    "title": "Help clean the basement",
     "id": 12,
     "author": "user@usermail.com",
-    "created_at": "2023-06-08T10:15:18.141Z",
-    "completed_at": ""
-  },
-  {
-    "title": "Help clean the basement",
-    "id": 13,
-    "author": "user@usermail.com",
-    "created_at": "2023-06-08T10:29:27.217Z",
-    "completed_at": ""
-  },
-  {
-    "title": "Help clean the basement",
-    "id": 14,
-    "author": "user@usermail.com",
-    "created_at": "2023-06-08T10:29:59.290Z",
-    "completed_at": ""
-  },
-  {
-    "title": "Help clean the basement",
-    "id": 15,
-    "author": "user@usermail.com",
-    "created_at": "2023-06-08T10:40:43.800Z",
-    "completed_at": ""
-  },
-  {
-    "title": "Help clean the basement",
-    "id": 16,
-    "author": "user@usermail.com",
-    "created_at": "2023-06-08T10:40:44.964Z",
-    "completed_at": ""
-  },
-  {
-    "title": "Help clean the basement",
-    "id": 17,
-    "author": "user@usermail.com",
-    "created_at": "2023-06-08T10:40:45.639Z",
-    "completed_at": ""
-  },
-  {
-    "title": "Help clean the basement",
-    "id": 18,
-    "author": "user@usermail.com",
-    "created_at": "2023-06-08T10:40:46.393Z",
-    "completed_at": ""
-  },
-  {
-    "title": "Help clean the basement",
-    "id": 19,
-    "author": "user@usermail.com",
-    "created_at": "2023-06-08T10:40:46.948Z",
+    "created_at": "2023-06-08T13:58:34.469Z",
     "completed_at": ""
   }
 ]

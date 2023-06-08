@@ -39,13 +39,6 @@ paths:
                   error: 
                     type: string
                     example: "Invalid credentials"
-        '500':
-          description: Internal Server Error
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/dataRetrievalError'
-                
 
   '/verify':
     get:
@@ -107,6 +100,12 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/task'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/forbidden'
         '404':
           description: Not Found
           content:
@@ -116,7 +115,7 @@ paths:
                 properties:
                   error: 
                     type: string
-                    example: "no tasks found"
+                    example: "No tasks found"
         '500':
           description: Internal Server Error
           content:
@@ -140,18 +139,22 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/task' 
-        '400':
-          description: Bad Request
+        '403':
+          description: Forbidden
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/bookAlreadyExists'
-        '422':
-          description: Unprocessable Content
+                $ref: '#/components/schemas/forbidden'
+        '406':
+          description: Not Acceptable
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/invalidBookJson'
+                type: object
+                properties:
+                  error: 
+                    type: string
+                    example: "Json is invalid. Allowed properties are: 'title': String"
         '500':
           description: Internal Server Error
           content:
@@ -175,12 +178,18 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/task'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/forbidden'
         '404':
           description: Not Found
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/bookNotFoundByIsbn'
+                $ref: '#/components/schemas/taskNotFoundById'
         '500':
           description: Internal Server Error
           content:
@@ -206,24 +215,28 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/task'
-        '400':
-          description: Bad Request
+        '403':
+          description: Forbidden
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/bookAlreadyExists'
+                $ref: '#/components/schemas/forbidden'
         '404':
           description: Not Found
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/bookNotFoundByIsbn'
-        '422':
-          description: Unprocessable Content
+                $ref: '#/components/schemas/taskNotFoundById'
+        '406':
+          description: Not Acceptable
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/invalidBookJson'
+                type: object
+                properties:
+                  error: 
+                    type: string
+                    example: "Json is invalid. Required properties are: 'title': String, 'created_at': String, 'completed_at': String"
         '500':
           description: Internal Server Error
           content:
@@ -242,12 +255,18 @@ paths:
       responses:
         '204':
           description: No Content
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/forbidden'
         '404':
           description: Not Found
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/bookNotFoundByIsbn'
+                $ref: '#/components/schemas/taskNotFoundById'
         '500':
           description: Internal Server Error
           content:
@@ -265,7 +284,7 @@ components:
       required: true
       description: The id of a task
       schema:
-        type: integer
+        type: string
         
   schemas:
     task:
@@ -305,39 +324,18 @@ components:
         error:
           type: string
           example: "An Error occured while writing data. Err: ${err}"
-          
-    invalidBookJson:
-      type: object
-      properties:
-        error: 
-          type: string
-          example: "Json is invalid. Required properties are: 'id': String, 'title': String, 'year': Number, 'author': String"
     
-    bookNotFoundByIsbn:
+    taskNotFoundById:
       type: object
       properties:
         error:
           type: string
           example: "no task with id: '${id}' found"
           
-    bookAlreadyExists:
+    forbidden:
       type: object
       properties:
         error:
           type: string
-          example: "task with id: '${newBook.id}' already exists"
-
-    lendNotFoundById:
-      type: object
-      properties:
-        error:
-          type: string
-          example: "no lend with id: ${id} found "
-        
-    invalidLendJson:
-      type: object
-      properties:
-        error: 
-          type: string
-          example: "Json is invalid. Required properties are: 'customer_id': Number, 'id': String"
+          example: "Unauthorized to access this Endpoint"
   

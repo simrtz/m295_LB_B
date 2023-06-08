@@ -17,7 +17,7 @@ router.get('/', async (req, res) => {
       .catch((err) => res.status(500).json({ error: `An Error occured while retrieving data. Err: ${err}` })));
 
     if (!tasks) {
-      res.status(404).json({ error: 'no tasks found' });
+      res.status(404).json({ error: 'No tasks found' });
     }
 
     res.status(200).json(tasks);
@@ -53,7 +53,7 @@ router.post('/', async (req, res) => {
 
     if ((typeof title !== 'string')
     ) {
-      res.status(422).json({ error: "Json is invalid. Allowed properties are: 'title': String" });
+      res.status(406).json({ error: "Json is invalid. Required properties are: 'title': String" });
     } else {
       const newTask = {
         title,
@@ -86,7 +86,7 @@ router.put('/:id', async (req, res) => {
         || typeof created_at !== 'string'
         || typeof completed_at !== 'string'
     ) {
-      res.status(422).json({ error: "Json is invalid. Required properties are: 'title': String, 'created_at': String, 'completed_at': String" });
+      res.status(406).json({ error: "Json is invalid. Required properties are: 'title': String, 'created_at': String, 'completed_at': String" });
     } else {
       const task = tasks.find((wantedTask) => wantedTask.id === parseInt(id, 10));
 

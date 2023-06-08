@@ -1,0 +1,561 @@
+[
+  {
+    "v": 1,
+    "name": "M295_LBB_ToDoCollection",
+    "folders": [
+      {
+        "v": 1,
+        "name": "Tasks (Before 'Successful Login')",
+        "folders": [],
+        "requests": [
+          {
+            "name": "Failed Get all tasks caused by not being logged in (403)",
+            "endpoint": "http://localhost:3000/tasks",
+            "method": "GET",
+            "headers": [],
+            "params": [],
+            "auth": {
+              "authType": "none",
+              "authActive": true
+            },
+            "body": {
+              "contentType": null,
+              "body": null
+            },
+            "preRequestScript": "",
+            "testScript": "pw.test(\"Check Response status\", () => {\n  pw.expect(pw.response.status).toBe(403);\n});\n\npw.test('Check JSON', () => {\n  const json = pw.response.body;\n  pw.expect(json.error).toBe('Unauthorized to access this Endpoint');\n});\n",
+            "v": "1"
+          },
+          {
+            "name": "Failed Post new task caused by not being logged in (403)",
+            "endpoint": "http://localhost:3000/tasks",
+            "method": "POST",
+            "headers": [],
+            "params": [],
+            "auth": {
+              "authType": "none",
+              "authActive": true
+            },
+            "body": {
+              "contentType": "application/json",
+              "body": "{\r\n    \"title\": \"Help clean the basement\",\r\n    \"goofball\": \"goofy\"\r\n}"
+            },
+            "preRequestScript": "",
+            "testScript": "pw.test(\"Check Response status\", () => {\n  pw.expect(pw.response.status).toBe(403);\n});\n\npw.test('Check JSON', () => {\n  const json = pw.response.body;\n  pw.expect(json.error).toBe('Unauthorized to access this Endpoint');\n});\n",
+            "v": "1"
+          },
+          {
+            "name": "Failed Get Task by Id caused by not being logged in (403)",
+            "endpoint": "http://localhost:3000/tasks/10",
+            "method": "GET",
+            "headers": [],
+            "params": [],
+            "auth": {
+              "authType": "none",
+              "authActive": true
+            },
+            "body": {
+              "contentType": null,
+              "body": null
+            },
+            "preRequestScript": "",
+            "testScript": "pw.test(\"Check Response status\", () => {\n  pw.expect(pw.response.status).toBe(403);\n});\n\npw.test('Check JSON', () => {\n  const json = pw.response.body;\n  pw.expect(json.error).toBe('Unauthorized to access this Endpoint');\n});\n",
+            "v": "1"
+          },
+          {
+            "name": "Failed Update Task by Id caused by not being logged in (403)",
+            "endpoint": "http://localhost:3000/tasks/10",
+            "method": "PUT",
+            "headers": [],
+            "params": [],
+            "auth": {
+              "authType": "none",
+              "authActive": true
+            },
+            "body": {
+              "contentType": "application/json",
+              "body": "{\r\n    \"title\": \"Call parents tonight\",\r\n    \"created_at\": \"2023-06-07T09:39:01.630Z\",\r\n    \"completed_at\": \"2023-06-08T39:39:01.630Z\"\r\n}"
+            },
+            "preRequestScript": "",
+            "testScript": "pw.test(\"Check Response status\", () => {\n  pw.expect(pw.response.status).toBe(403);\n});\n\npw.test('Check JSON', () => {\n  const json = pw.response.body;\n  pw.expect(json.error).toBe('Unauthorized to access this Endpoint');\n});\n",
+            "v": "1"
+          },
+          {
+            "name": "Failed Delete Task by Id caused by not being logged in (403)",
+            "endpoint": "http://localhost:3000/tasks/10",
+            "method": "DELETE",
+            "headers": [],
+            "params": [],
+            "auth": {
+              "authType": "none",
+              "authActive": true
+            },
+            "body": {
+              "contentType": null,
+              "body": null
+            },
+            "preRequestScript": "",
+            "testScript": "pw.test(\"Check Response status\", () => {\n  pw.expect(pw.response.status).toBe(403);\n});\n\npw.test('Check JSON', () => {\n  const json = pw.response.body;\n  pw.expect(json.error).toBe('Unauthorized to access this Endpoint');\n});\n",
+            "v": "1"
+          }
+        ]
+      },
+      {
+        "v": 1,
+        "name": "Auth",
+        "folders": [
+          {
+            "v": 1,
+            "name": "Failed (Execute Stepwise)",
+            "folders": [],
+            "requests": [
+              {
+                "name": "Failed Login because of Password (401)",
+                "endpoint": "http://localhost:3000/login",
+                "method": "POST",
+                "headers": [],
+                "params": [],
+                "auth": {
+                  "authType": "none",
+                  "authActive": true
+                },
+                "body": {
+                  "contentType": "application/json",
+                  "body": "{\r\n    \"email\": \"user@usermail.com\",\r\n    \"password\": \"dasdafdfsv\"\r\n}"
+                },
+                "preRequestScript": "",
+                "testScript": "pw.test(\"Check Response status\", () => {\n  pw.expect(pw.response.status).toBe(401);\n});\n\npw.test('Check JSON', () => {\n  const json = pw.response.body;\n  pw.expect(json.error).toBe('Invalid credentials');\n});\n",
+                "v": "1"
+              },
+              {
+                "name": "Failed Login because of E-Mail (401)",
+                "endpoint": "http://localhost:3000/login",
+                "method": "POST",
+                "headers": [],
+                "params": [],
+                "auth": {
+                  "authType": "none",
+                  "authActive": true
+                },
+                "body": {
+                  "contentType": "application/json",
+                  "body": "{\r\n    \"email\": \"\",\r\n    \"password\": \"m295\"\r\n}"
+                },
+                "preRequestScript": "",
+                "testScript": "pw.test(\"Check Response status\", () => {\n  pw.expect(pw.response.status).toBe(401);\n});\n\npw.test('Check JSON', () => {\n  const json = pw.response.body;\n  pw.expect(json.error).toBe('Invalid credentials');\n});\n",
+                "v": "1"
+              },
+              {
+                "name": "Failed Verification (401)",
+                "endpoint": "http://localhost:3000/verify",
+                "method": "GET",
+                "headers": [],
+                "params": [],
+                "auth": {
+                  "authType": "none",
+                  "authActive": true
+                },
+                "body": {
+                  "contentType": null,
+                  "body": null
+                },
+                "preRequestScript": "",
+                "testScript": "pw.test(\"Check Response status\", () => {\n  pw.expect(pw.response.status).toBe(401);\n});\n\npw.test('Check JSON', () => {\n  const json = pw.response.body;\n  pw.expect(json.error).toBe('Not logged in');\n});\n",
+                "v": "1"
+              },
+              {
+                "name": "Failed Logout (401)",
+                "endpoint": "http://localhost:3000/logout",
+                "method": "DELETE",
+                "headers": [],
+                "params": [],
+                "auth": {
+                  "authType": "none",
+                  "authActive": true
+                },
+                "body": {
+                  "contentType": null,
+                  "body": null
+                },
+                "preRequestScript": "",
+                "testScript": "pw.test(\"Check Response status\", () => {\n  pw.expect(pw.response.status).toBe(401);\n});\n\npw.test('Check JSON', () => {\n  const json = pw.response.body;\n  pw.expect(json.error).toBe('Not logged in');\n});\n",
+                "v": "1"
+              }
+            ]
+          },
+          {
+            "v": 1,
+            "name": "Successful (Execute Stepwise)",
+            "folders": [],
+            "requests": [
+              {
+                "name": "Successful Login",
+                "endpoint": "http://localhost:3000/login",
+                "method": "POST",
+                "headers": [],
+                "params": [],
+                "auth": {
+                  "authType": "none",
+                  "authActive": true
+                },
+                "body": {
+                  "contentType": "application/json",
+                  "body": "{\r\n    \"email\": \"user@usermail.com\",\r\n    \"password\": \"m295\"\r\n}"
+                },
+                "preRequestScript": "",
+                "testScript": "pw.test(\"Check Response status\", () => {\n  pw.expect(pw.response.status).toBe(200);\n});\n\npw.test('Check JSON', () => {\n  const json = pw.response.body;\n  pw.expect(json.email).toBe('user@usermail.com');\n});\n",
+                "v": "1"
+              },
+              {
+                "name": "Successful Verification",
+                "endpoint": "http://localhost:3000/verify",
+                "method": "GET",
+                "headers": [],
+                "params": [],
+                "auth": {
+                  "authType": "none",
+                  "authActive": true
+                },
+                "body": {
+                  "contentType": null,
+                  "body": null
+                },
+                "preRequestScript": "",
+                "testScript": "pw.test(\"Check Response status\", () => {\n  pw.expect(pw.response.status).toBe(200);\n});\n\npw.test('Check JSON', () => {\n  const json = pw.response.body;\n  pw.expect(json.email).toBe('user@usermail.com');\n});\n",
+                "v": "1"
+              },
+              {
+                "name": "Successful Logout",
+                "endpoint": "http://localhost:3000/logout",
+                "method": "DELETE",
+                "headers": [],
+                "params": [],
+                "auth": {
+                  "authType": "none",
+                  "authActive": true
+                },
+                "body": {
+                  "contentType": null,
+                  "body": null
+                },
+                "preRequestScript": "",
+                "testScript": "pw.test(\"Check Response status\", () => {\n  pw.expect(pw.response.status).toBe(204);\n});\n\npw.test('Check JSON', () => {\n  pw.expect(pw.response.body).toBe('');\n});\n",
+                "v": "1"
+              },
+              {
+                "name": "(IGNORE -> Setup for Task automatic Testing with CLI",
+                "endpoint": "http://localhost:3000/login",
+                "method": "POST",
+                "headers": [],
+                "params": [],
+                "auth": {
+                  "authType": "none",
+                  "authActive": true
+                },
+                "body": {
+                  "contentType": "application/json",
+                  "body": "{\r\n    \"email\": \"user@usermail.com\",\r\n    \"password\": \"m295\"\r\n}"
+                },
+                "preRequestScript": "",
+                "testScript": "pw.test(\"Check Response status\", () => {\n  pw.expect(pw.response.status).toBe(200);\n});\n\npw.test('Check JSON', () => {\n  const json = pw.response.body;\n  pw.expect(json.email).toBe('user@usermail.com');\n});\n",
+                "v": "1"
+              }
+            ]
+          }
+        ],
+        "requests": []
+      },
+      {
+        "v": 1,
+        "name": "Tasks (After 'Successful Login')",
+        "folders": [
+          {
+            "v": 1,
+            "name": "Successful (Execute Stepwise)",
+            "folders": [],
+            "requests": [
+              {
+                "name": "Successful Get all tasks",
+                "endpoint": "http://localhost:3000/tasks",
+                "method": "GET",
+                "headers": [],
+                "params": [],
+                "auth": {
+                  "authType": "none",
+                  "authActive": true
+                },
+                "body": {
+                  "contentType": null,
+                  "body": null
+                },
+                "preRequestScript": "",
+                "testScript": "pw.test(\"Check Response status\", () => {\n  pw.expect(pw.response.status).toBe(200);\n});\n\npw.test('Check JSON', () => {\n  const json = pw.response.body;\n  pw.expect(json.length).toBe(11);\n  pw.expect(json[0].id).toBe(1)\n  pw.expect(json[0].title).toBe('Clean the kitchen')\n  pw.expect(json[0].author).toBe('user@usermail.com')\n  pw.expect(json[0].created_at).toBe('2023-06-08T10:00:24.000Z')\n  pw.expect(json[0].completed_at).toBe('2023-06-09T10:49:24.000Z')\n});\n",
+                "v": "1"
+              },
+              {
+                "name": "Successful Post new task",
+                "endpoint": "http://localhost:3000/tasks",
+                "method": "POST",
+                "headers": [],
+                "params": [],
+                "auth": {
+                  "authType": "none",
+                  "authActive": true
+                },
+                "body": {
+                  "contentType": "application/json",
+                  "body": "{\r\n    \"title\": \"Help clean the basement\"\r\n}"
+                },
+                "preRequestScript": "",
+                "testScript": "pw.test(\"Check Response status\", () => {\n  pw.expect(pw.response.status).toBe(201);\n});\n\npw.test('Check JSON', () => {\n  const json = pw.response.body;\n  pw.expect(json.id).toBe(12)\n  pw.expect(json.title).toBe('Help clean the basement')\n  pw.expect(json.author).toBe('user@usermail.com')\n  pw.expect(json.created_at).not.toBe('')\n  pw.expect(json.completed_at).toBe('')\n});\n",
+                "v": "1"
+              },
+              {
+                "name": "Successful Get Task by Id",
+                "endpoint": "http://localhost:3000/tasks/11",
+                "method": "GET",
+                "headers": [],
+                "params": [],
+                "auth": {
+                  "authType": "none",
+                  "authActive": true
+                },
+                "body": {
+                  "contentType": null,
+                  "body": null
+                },
+                "preRequestScript": "",
+                "testScript": "pw.test(\"Check Response status\", () => {\n  pw.expect(pw.response.status).toBe(200);\n});\n\npw.test('Check JSON', () => {\n  const json = pw.response.body;\n  pw.expect(json.id).toBe(11)\n  pw.expect(json.title).toBe('Help clean the basement')\n  pw.expect(json.author).toBe('user@usermail.com')\n  pw.expect(json.created_at).toBe('2023-06-08T09:39:01.630Z')\n  pw.expect(json.completed_at).toBe('')\n});\n",
+                "v": "1"
+              },
+              {
+                "name": "Successful Update Task by Id",
+                "endpoint": "http://localhost:3000/tasks/10",
+                "method": "PUT",
+                "headers": [],
+                "params": [],
+                "auth": {
+                  "authType": "none",
+                  "authActive": true
+                },
+                "body": {
+                  "contentType": "application/json",
+                  "body": "{\r\n    \"title\": \"Call parents tonight\",\r\n    \"created_at\": \"2023-06-07T09:39:01.630Z\",\r\n    \"completed_at\": \"2023-06-08T39:39:01.630Z\"\r\n}"
+                },
+                "preRequestScript": "",
+                "testScript": "pw.test(\"Check Response status\", () => {\n  pw.expect(pw.response.status).toBe(200);\n});\n\npw.test('Check JSON', () => {\n  const json = pw.response.body;\n  pw.expect(json.id).toBe(10)\n  pw.expect(json.title).toBe('Call parents tonight')\n  pw.expect(json.author).toBe('user@usermail.com')\n  pw.expect(json.created_at).toBe('2023-06-07T09:39:01.630Z')\n  pw.expect(json.completed_at).toBe('2023-06-08T39:39:01.630Z')\n});\n",
+                "v": "1"
+              },
+              {
+                "name": "Successful Delete Task by Id",
+                "endpoint": "http://localhost:3000/tasks/9",
+                "method": "DELETE",
+                "headers": [],
+                "params": [],
+                "auth": {
+                  "authType": "none",
+                  "authActive": true
+                },
+                "body": {
+                  "contentType": null,
+                  "body": null
+                },
+                "preRequestScript": "",
+                "testScript": "pw.test(\"Check Response status\", () => {\n  pw.expect(pw.response.status).toBe(200);\n});\n\npw.test('Check JSON', () => {\n  const json = pw.response.body;\n  pw.expect(json.id).toBe(9)\n  pw.expect(json.title).toBe('Attend a yoga class')\n  pw.expect(json.author).toBe('goofy@mcgoofball.com')\n  pw.expect(json.created_at).toBe('2023-06-12T10:30:24.000Z')\n  pw.expect(json.completed_at).toBe('')\n});",
+                "v": "1"
+              }
+            ]
+          },
+          {
+            "v": 1,
+            "name": "Failed",
+            "folders": [
+              {
+                "v": 1,
+                "name": "Post New Task",
+                "folders": [],
+                "requests": [
+                  {
+                    "name": "Failed Post because of missing body (406)",
+                    "endpoint": "http://localhost:3000/tasks",
+                    "method": "POST",
+                    "headers": [],
+                    "params": [],
+                    "auth": {
+                      "authType": "none",
+                      "authActive": true
+                    },
+                    "body": {
+                      "contentType": null,
+                      "body": ""
+                    },
+                    "preRequestScript": "",
+                    "testScript": "pw.test(\"Check Response status\", () => {\n  pw.expect(pw.response.status).toBe(406);\n});\n\npw.test('Check JSON', () => {\n  const json = pw.response.body;\n  pw.expect(json.error).toBe(\"Json is invalid. Required properties are: 'title': String\");\n});\n",
+                    "v": "1"
+                  },
+                  {
+                    "name": "Failed Post because of missing title but other properties (406)",
+                    "endpoint": "http://localhost:3000/tasks",
+                    "method": "POST",
+                    "headers": [],
+                    "params": [],
+                    "auth": {
+                      "authType": "none",
+                      "authActive": true
+                    },
+                    "body": {
+                      "contentType": "application/json",
+                      "body": "{\r\n    \"test\": \"test\"\r\n}"
+                    },
+                    "preRequestScript": "",
+                    "testScript": "pw.test(\"Check Response status\", () => {\n  pw.expect(pw.response.status).toBe(406);\n});\n\npw.test('Check JSON', () => {\n  const json = pw.response.body;\n  pw.expect(json.error).toBe(\"Json is invalid. Required properties are: 'title': String\");\n});\n",
+                    "v": "1"
+                  }
+                ]
+              },
+              {
+                "v": 1,
+                "name": "Get Task by Id",
+                "folders": [],
+                "requests": [
+                  {
+                    "name": "Failed Get because of non-existent Id (404)",
+                    "endpoint": "http://localhost:3000/tasks/843927478681972784631784628967",
+                    "method": "GET",
+                    "headers": [],
+                    "params": [],
+                    "auth": {
+                      "authType": "none",
+                      "authActive": true
+                    },
+                    "body": {
+                      "contentType": null,
+                      "body": null
+                    },
+                    "preRequestScript": "",
+                    "testScript": "pw.test(\"Check Response status\", () => {\n  pw.expect(pw.response.status).toBe(404);\n});\n\npw.test('Check JSON', () => {\n  const json = pw.response.body;\n  pw.expect(json.error).toBe(\"No task with id: '843927478681972784631784628967' found\");\n});\n",
+                    "v": "1"
+                  }
+                ]
+              },
+              {
+                "v": 1,
+                "name": "Update Task by Id",
+                "folders": [],
+                "requests": [
+                  {
+                    "name": "Failed Update because of missing Body (406)",
+                    "endpoint": "http://localhost:3000/tasks/1",
+                    "method": "PUT",
+                    "headers": [],
+                    "params": [],
+                    "auth": {
+                      "authType": "none",
+                      "authActive": true
+                    },
+                    "body": {
+                      "contentType": null,
+                      "body": ""
+                    },
+                    "preRequestScript": "",
+                    "testScript": "pw.test(\"Check Response status\", () => {\n  pw.expect(pw.response.status).toBe(406);\n});\n\npw.test('Check JSON', () => {\n  const json = pw.response.body;\n  pw.expect(json.error).toBe(\"Json is invalid. Required properties are: 'title': String, 'created_at': String, 'completed_at': String\");\n});\n",
+                    "v": "1"
+                  },
+                  {
+                    "name": "Failed Update because of missing properties (406)",
+                    "endpoint": "http://localhost:3000/tasks/1",
+                    "method": "PUT",
+                    "headers": [],
+                    "params": [],
+                    "auth": {
+                      "authType": "none",
+                      "authActive": true
+                    },
+                    "body": {
+                      "contentType": "application/json",
+                      "body": "{\r\n    \"completed_at\": \"2023-06-08T39:39:01.630Z\"\r\n}"
+                    },
+                    "preRequestScript": "",
+                    "testScript": "pw.test(\"Check Response status\", () => {\n  pw.expect(pw.response.status).toBe(406);\n});\n\npw.test('Check JSON', () => {\n  const json = pw.response.body;\n  pw.expect(json.error).toBe(\"Json is invalid. Required properties are: 'title': String, 'created_at': String, 'completed_at': String\");\n});\n",
+                    "v": "1"
+                  },
+                  {
+                    "name": "Failed Update because of non-existent Id (404)",
+                    "endpoint": "http://localhost:3000/tasks/14892347",
+                    "method": "PUT",
+                    "headers": [],
+                    "params": [],
+                    "auth": {
+                      "authType": "none",
+                      "authActive": true
+                    },
+                    "body": {
+                      "contentType": "application/json",
+                      "body": "{\r\n    \"title\": \"Test\",\r\n    \"created_at\": \"2023-06-07T09:39:01.630Z\",\r\n    \"completed_at\": \"2023-06-08T39:39:01.630Z\"\r\n}"
+                    },
+                    "preRequestScript": "",
+                    "testScript": "pw.test(\"Check Response status\", () => {\n  pw.expect(pw.response.status).toBe(404);\n});\n\npw.test('Check JSON', () => {\n  const json = pw.response.body;\n  pw.expect(json.error).toBe(\"no task with id: '14892347' found\");\n});\n",
+                    "v": "1"
+                  }
+                ]
+              },
+              {
+                "v": 1,
+                "name": "Delete Task by Id",
+                "folders": [],
+                "requests": [
+                  {
+                    "name": "Failed Delete because of non-existent Id",
+                    "endpoint": "http://localhost:3000/tasks/438423478t7657z32t2894778",
+                    "method": "DELETE",
+                    "headers": [],
+                    "params": [],
+                    "auth": {
+                      "authType": "none",
+                      "authActive": true
+                    },
+                    "body": {
+                      "contentType": null,
+                      "body": null
+                    },
+                    "preRequestScript": "",
+                    "testScript": "pw.test(\"Check Response status\", () => {\n  pw.expect(pw.response.status).toBe(404);\n});\n\npw.test('Check JSON', () => {\n  const json = pw.response.body;\n  pw.expect(json.error).toBe(\"No task with id: '438423478t7657z32t2894778' found\");\n});",
+                    "v": "1"
+                  }
+                ]
+              }
+            ],
+            "requests": []
+          }
+        ],
+        "requests": []
+      },
+      {
+        "v": 1,
+        "name": "Others",
+        "folders": [],
+        "requests": [
+          {
+            "name": "Failed Get because of non-existent Endpoint (404)",
+            "endpoint": "http://localhost:3000/ThisEndpointDoesNotExist",
+            "method": "GET",
+            "headers": [],
+            "params": [],
+            "auth": {
+              "authType": "none",
+              "authActive": true
+            },
+            "body": {
+              "contentType": null,
+              "body": null
+            },
+            "preRequestScript": "",
+            "testScript": "pw.test(\"Check Response status\", () => {\n  pw.expect(pw.response.status).toBe(404);\n});\n\npw.test('Check JSON', () => {\n  const json = pw.response.body;\n  pw.expect(json.error).toBe('Endpoint does not exist');\n});\n",
+            "v": "1"
+          }
+        ]
+      }
+    ],
+    "requests": []
+  }
+]

@@ -9,7 +9,7 @@ router.post('/login', async (req, res) => {
   if (password === 'm295' && email) {
     req.session.authenticated = true;
     req.session.email = email;
-    res.status(201).json({ email: req.session.email });
+    res.status(200).json({ email: req.session.email });
   } else {
     res.status(401).json({ error: 'Invalid credentials' });
   }
